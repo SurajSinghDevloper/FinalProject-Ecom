@@ -8,6 +8,7 @@ const getProducts = () => {
       dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
       const res = await axios.post(`product/getProducts`);
       if (res.status === 200) {
+        console.log("👉👉👉 ~~ file: product.action.js:11 ~~ return ~~ res:", res)
         const { products } = res.data;
         dispatch({
           type: productConstants.GET_ALL_PRODUCTS_SUCCESS,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
@@ -6,6 +6,7 @@ import Modal from "../../components/UI/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct, deleteProductById } from "../../actions";
 import "./style.css";
+import { generatePublicUrl } from "../../urlConfig";
 
 /**
  * @author
@@ -168,17 +169,24 @@ const Products = (props) => {
   const handleCloseProductDetailsModal = () => {
     setProductDetailModal(false);
   };
+  console.log("👉👉👉 ~~ file: index.js:26 ~~ Products ~~ productDetails:", productDetails)
 
   const showProductDetailsModal = (product) => {
     setProductDetails(product);
     setProductDetailModal(true);
   };
+  useEffect(() => {
+    if (productDetails) {
+      setProductDetailModal(true);
+    }
+  }, [productDetails]);
 
   const renderProductDetailsModal = () => {
+    console.log("👉👉👉 ~~ file: index.js:26 ~~ Products ~~ productDetails:", productDetails)
+
     if (!productDetails) {
       return null;
     }
-
     return (
       <Modal
         show={productDetailModal}
@@ -216,17 +224,23 @@ const Products = (props) => {
           <Col>
             <label className="key">Product Pictures</label>
             <div style={{ display: "flex" }}>
-              {productDetails.productPictures.map((picture) => (
-                <div className="productImgContainer">
-                  <img src={picture.img} alt="" />
-                </div>
-              ))}
+              <div style={{ display: "flex" }}>
+                {productDetails.productPictures.map(picture => (
+                  <div className="productImgContainer">
+                    <img src={generatePublicUrl(picture.img)} alt="img" />
+                  </div>
+                ))}
+              </div>
             </div>
           </Col>
         </Row>
       </Modal>
     );
   };
+
+
+
+
   return (
     <Layout sidebar>
       <Container>
@@ -249,3 +263,4 @@ const Products = (props) => {
 };
 
 export default Products;
+

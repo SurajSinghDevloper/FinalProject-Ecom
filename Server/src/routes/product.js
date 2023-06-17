@@ -26,11 +26,6 @@ router.delete("/product/deleteProductById",
   adminMiddleware,
   deleteProductById
 );
-router.post(
-  "/product/getProducts",
-  requireSignin,
-  adminMiddleware,
-  getProducts
-);
+router.post("/product/getProducts", requireSignin, adminMiddleware, getProducts);
 
 module.exports = router;
